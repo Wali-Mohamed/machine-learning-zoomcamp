@@ -1,5 +1,7 @@
 import streamlit as st
 import pickle
+#import sklearn  # Import scikit-learn to support deserializing objects
+
 import os
 # Define paths to the model files relative to the app directory
 base_dir = os.getcwd()  # Gets the directory of the current script
