@@ -224,9 +224,6 @@ if st.button("Predict"):
         else:
             insert_feedback(thumbs_up_bool, comment)
             st.success("Thank you for your feedback!")
-    if st.button("Show Feedback"):
-        feedback = fetch_feedback()
-        st.write(feedback)
-
+    
 # Close database connection when done
 conn.close()
