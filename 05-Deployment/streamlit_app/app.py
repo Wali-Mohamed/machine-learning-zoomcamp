@@ -79,7 +79,6 @@ conn = get_database_connection()
 cursor = conn.cursor()
 
 
-cursor = conn.cursor()
 cursor.execute("""
     CREATE TABLE IF NOT EXISTS feedback (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
