@@ -225,5 +225,3 @@ if st.button("Predict"):
             insert_feedback(thumbs_up_bool, comment)
             st.success("Thank you for your feedback!")
     
-# Close database connection when done
-conn.close()
