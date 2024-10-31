@@ -172,17 +172,32 @@ if st.button("Predict"):
     st.write(result["message"])
     st.json(result)  # Display detailed JSON format for technical review
 
-     # Feedback section
+    # Feedback section
     st.write("### Feedback")
-    thumbs_up = st.radio("Did you find this prediction helpful?", ("👎 No","👍 Yes" ))
-    st.write('Any additional comments?')
+    col1, col2 = st.columns([1, 1])  # Create two equal columns for thumbs up and down
+    with col1:
+        thumbs_up = st.button("👍 Yes")
+    with col2:
+        thumbs_down = st.button("👎 No")
+
+    # Use session state to keep track of feedback selection
+    if thumbs_up:
+        st.session_state.feedback = True
+    elif thumbs_down:
+        st.session_state.feedback = False
+
+    # Comment box, always visible after prediction
     comment = st.text_input("Any additional comments? (Optional)")
 
+    # Submit Feedback button
     if st.button("Submit Feedback"):
-        thumbs_up_bool = thumbs_up == "👍 Yes"
-        cursor.execute("INSERT INTO feedback (thumbs_up, comment) VALUES (?, ?)", (thumbs_up_bool, comment))
-        conn.commit()
-        st.success("Thank you for your feedback!")
+        thumbs_up_bool = st.session_state.get("feedback")  # Retrieve feedback selection
+        if thumbs_up_bool is None:
+            st.warning("Please select 👍 Yes or 👎 No before submitting feedback.")
+        else:
+            cursor.execute("INSERT INTO feedback (thumbs_up, comment) VALUES (?, ?)", (thumbs_up_bool, comment))
+            conn.commit()
+            st.success("Thank you for your feedback!")
 
 # Close database connection when done
 conn.close()
