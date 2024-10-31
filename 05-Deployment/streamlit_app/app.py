@@ -3,7 +3,7 @@ import pickle
 import os
 # Define paths to the model files relative to the app directory
 base_dir = os.path.dirname(__file__)  # Gets the directory of the current script
-
+print(base_dir)
 dv_path = os.path.join(base_dir, '05-Deployment/streamlit_app/dv.bin')
 model_path = os.path.join(base_dir, '05-Deployment/streamlit_app/model1.bin')
 print(dv_path, model_path)
