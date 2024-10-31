@@ -3,10 +3,10 @@ import pickle
 import os
 # Define paths to the model files relative to the app directory
 base_dir = os.path.dirname(__file__)  # Gets the directory of the current script
-print(base_dir)
-dv_path = os.path.join(base_dir, 'dv.bin')
-model_path = os.path.join(base_dir, 'model1.bin')
 
+dv_path = os.path.join(base_dir, '05-Deployment/streamlit_app/dv.bin')
+model_path = os.path.join(base_dir, '05-Deployment/streamlit_app/model1.bin')
+print(dv_path, model_path)
 # Check if files exist and load models
 if not os.path.isfile(dv_path) or not os.path.isfile(model_path):
     st.error("Model files 'dv.bin' or 'model1.bin' not found in the directory. Check file paths.")
