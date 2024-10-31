@@ -175,6 +175,7 @@ if st.button("Predict"):
      # Feedback section
     st.write("### Feedback")
     thumbs_up = st.radio("Did you find this prediction helpful?", ("👎 No","👍 Yes" ))
+    st.write('Any additional comments?')
     comment = st.text_input("Any additional comments? (Optional)")
 
     if st.button("Submit Feedback"):
