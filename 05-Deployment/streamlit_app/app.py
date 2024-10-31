@@ -1,5 +1,6 @@
 import streamlit as st
 import pickle
+import sqlite3
 #import sklearn  # Import scikit-learn to support deserializing objects
 
 import os
@@ -7,7 +8,9 @@ import os
 base_dir = os.getcwd()  # Gets the directory of the current script
 print(base_dir)
 dv_path = os.path.join(base_dir, '05-Deployment/streamlit_app/dv.bin')
+#dv_path = os.path.join(base_dir, 'dv.bin')
 model_path = os.path.join(base_dir, '05-Deployment/streamlit_app/model1.bin')
+#model_path = os.path.join(base_dir, 'model1.bin')
 print(dv_path, model_path)
 # Check if files exist and load models
 if not os.path.isfile(dv_path) or not os.path.isfile(model_path):
@@ -46,8 +49,36 @@ st.markdown("""
         font-size: 1.2em;
         color: #003366;
     }
+     /* Custom button style */
+    div.stButton > button:first-child {
+        background-color: #0066cc; /* Distinct blue background */
+        color: white; /* White text for contrast */
+        border: 2px solid #004080; /* Darker blue border */
+        border-radius: 8px;
+        padding: 10px 24px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    div.stButton > button:first-child:hover {
+        background-color: #004080; /* Darker blue on hover */
+        border-color: #003366; /* Even darker blue border on hover */
+        color: white;
+    }
+
+    
     </style>
     """, unsafe_allow_html=True)
+# Database setup for feedback
+conn = sqlite3.connect("feedback.db")
+cursor = conn.cursor()
+cursor.execute("""
+    CREATE TABLE IF NOT EXISTS feedback (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        thumbs_up BOOLEAN,
+        comment TEXT
+    )
+""")
+conn.commit()
 # App Title and Description
 st.title("Bank Term Deposit Prediction")
 st.write("""
@@ -94,17 +125,18 @@ if show_features:
     - **previous**: Number of contacts performed before this campaign for this client.
     - **poutcome**: Outcome of the previous marketing campaign (e.g., success, failure, nonexistent).
     """)
-
+# Title for the form
+st.write("## Enter Client Information to Predict Subscription Likelihood")
 # Job options
 job_options = ["management", "technician", "entrepreneur", "blue-collar", "unknown"]
-job = st.sidebar.selectbox("Select Job", job_options)
+job = st.selectbox("Select Job", job_options)
 
 # Duration input
-duration = st.sidebar.slider("Duration of Last Contact (seconds)", min_value=0, max_value=1000, value=400, step=10)
+duration = st.slider("Duration of Last Contact (seconds)", min_value=0, max_value=1000, value=400, step=10)
 
 # Poutcome options
 poutcome_options = ["success", "failure", "unknown"]
-poutcome = st.sidebar.selectbox("Outcome of Previous Campaign", poutcome_options)
+poutcome = st.selectbox("Outcome of Previous Campaign", poutcome_options)
 
 # Input data formatting
 client_data = {
@@ -114,7 +146,7 @@ client_data = {
 }
 print(dv)
 # Predict button
-if st.sidebar.button("Predict"):
+if st.button("Predict"):
     st.write("### Prediction Result")
     
     # transform
@@ -139,3 +171,17 @@ if st.sidebar.button("Predict"):
     
     st.write(result["message"])
     st.json(result)  # Display detailed JSON format for technical review
+
+     # Feedback section
+    st.write("### Feedback")
+    thumbs_up = st.radio("Did you find this prediction helpful?", ("👍 Yes", "👎 No"))
+    comment = st.text_input("Any additional comments? (Optional)")
+
+    if st.button("Submit Feedback"):
+        thumbs_up_bool = thumbs_up == "👍 Yes"
+        cursor.execute("INSERT INTO feedback (thumbs_up, comment) VALUES (?, ?)", (thumbs_up_bool, comment))
+        conn.commit()
+        st.success("Thank you for your feedback!")
+
+# Close database connection when done
+conn.close()
