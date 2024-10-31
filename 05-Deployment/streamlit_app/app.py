@@ -69,8 +69,16 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 @st.cache_resource
-# Database setup for feedback
-conn = sqlite3.connect("feedback.db")
+def get_database_connection():
+    # Connect to the SQLite database file
+    conn = sqlite3.connect("feedback.db")
+    return conn
+
+# Get the database connection
+conn = get_database_connection()
+cursor = conn.cursor()
+
+
 cursor = conn.cursor()
 cursor.execute("""
     CREATE TABLE IF NOT EXISTS feedback (
