@@ -102,14 +102,8 @@ def insert_feedback(thumbs_up, comment):
         conn.commit()
 
 
-cursor.execute("""
-    CREATE TABLE IF NOT EXISTS feedback (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        thumbs_up BOOLEAN,
-        comment TEXT
-    )
-""")
-conn.commit()
+
+
 # App Title and Description
 st.title("Bank Term Deposit Prediction")
 st.write("""
