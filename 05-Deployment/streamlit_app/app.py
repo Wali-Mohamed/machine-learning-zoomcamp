@@ -11,16 +11,14 @@ print(dv_path, model_path)
 if not os.path.isfile(dv_path) or not os.path.isfile(model_path):
     st.error("Model files 'dv.bin' or 'model1.bin' not found in the directory. Check file paths.")
 else:
+    # Load your pre-trained model and transformer 
     with open(dv_path, 'rb') as f_in:
         dv = pickle.load(f_in)
     with open(model_path, 'rb') as f_in:
         model = pickle.load(f_in)
 
-# Load your pre-trained model and transformer (Assuming you have `dv` and `model` saved)
-with open('dv.bin', 'rb') as f_in:
-    dv = pickle.load(f_in)
-with open('model1.bin', 'rb') as f_in:
-    model = pickle.load(f_in)
+
+
 # CSS for business theme background
 st.markdown("""
     <style>
