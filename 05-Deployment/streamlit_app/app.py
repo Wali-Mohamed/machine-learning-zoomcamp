@@ -68,6 +68,7 @@ st.markdown("""
     
     </style>
     """, unsafe_allow_html=True)
+@st.cache_resource
 # Database setup for feedback
 conn = sqlite3.connect("feedback.db")
 cursor = conn.cursor()
