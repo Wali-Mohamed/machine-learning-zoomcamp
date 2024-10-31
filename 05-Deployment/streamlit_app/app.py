@@ -72,11 +72,34 @@ st.markdown("""
 def get_database_connection():
     # Connect to the SQLite database file
     conn = sqlite3.connect("feedback.db")
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS feedback (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            thumbs_up BOOLEAN,
+            comment TEXT
+                 
+        )
+          """)
     return conn
 
 # Get the database connection
 conn = get_database_connection()
-cursor = conn.cursor()
+# Get the cached database connection
+
+
+# Example: Run a query with a new cursor each time
+def fetch_feedback():
+    with conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM feedback")
+        return cursor.fetchall()
+
+# Example: Insert data into the database
+def insert_feedback(thumbs_up, comment):
+    with conn:
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO feedback (thumbs_up, comment) VALUES (?, ?)", (thumbs_up, comment))
+        conn.commit()
 
 
 cursor.execute("""
@@ -205,9 +228,11 @@ if st.button("Predict"):
         if thumbs_up_bool is None:
             st.warning("Please select 👍 Yes or 👎 No before submitting feedback.")
         else:
-            cursor.execute("INSERT INTO feedback (thumbs_up, comment) VALUES (?, ?)", (thumbs_up_bool, comment))
-            conn.commit()
+            insert_feedback(thumbs_up_bool, comment)
             st.success("Thank you for your feedback!")
+    if st.button("Show Feedback"):
+        feedback = fetch_feedback()
+        st.write(feedback)
 
 # Close database connection when done
 conn.close()
