@@ -2,7 +2,7 @@ import streamlit as st
 import pickle
 import os
 # Define paths to the model files relative to the app directory
-base_dir = os.path.dirname(__file__)  # Gets the directory of the current script
+base_dir = os.getcwd()  # Gets the directory of the current script
 print(base_dir)
 dv_path = os.path.join(base_dir, '05-Deployment/streamlit_app/dv.bin')
 model_path = os.path.join(base_dir, '05-Deployment/streamlit_app/model1.bin')
@@ -110,7 +110,7 @@ client_data = {
     "duration": duration,
     "poutcome": poutcome
 }
-
+print(dv)
 # Predict button
 if st.sidebar.button("Predict"):
     st.write("### Prediction Result")
