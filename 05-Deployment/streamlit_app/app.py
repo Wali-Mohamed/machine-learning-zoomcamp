@@ -1,5 +1,15 @@
 import streamlit as st
 import pickle
+import os
+# Check if files exist
+if not os.path.isfile("dv.bin") or not os.path.isfile("model1.bin"):
+    st.error("Model files 'dv.bin' or 'model1.bin' not found in the directory. Check file paths.")
+else:
+    # Load the model files if they exist
+    with open("dv.bin", "rb") as f_in:
+        dv = pickle.load(f_in)
+    with open("model1.bin", "rb") as f_in:
+        model = pickle.load(f_in)
 
 # Load your pre-trained model and transformer (Assuming you have `dv` and `model` saved)
 with open('dv.bin', 'rb') as f_in:
