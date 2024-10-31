@@ -2,8 +2,8 @@ from flask import Flask, request, jsonify
 import pickle
 import numpy
 
-customer={"job": "management", "duration": 400, "poutcome": "success"}
-print(customer)
+app = Flask('churn-prediction') # give an identity to your web service
+
 with open('dv.bin', 'rb') as f_in: # very important to use 'rb' here, it means read-binary 
     dv = pickle.load(f_in)
 with open('model1.bin', 'rb') as f_in: # very important to use 'rb' here, it means read-binary 
@@ -11,14 +11,15 @@ with open('model1.bin', 'rb') as f_in: # very important to use 'rb' here, it mea
 ## Note: never open a binary file you do not trust the source!
 print(dv)
 print(model)
-app = Flask('ping') # give an identity to your web service
+
 
 @app.route('/pred', methods=['POST']) # use decorator to add Flask's functionality to our function
 def predict():
-    request.get_json()
+    
+    client=request.get_json()
     
 
-    X = dv.transform(customer)
+    X = dv.transform(client)
     y_pred = model.predict_proba(X)[:, 1]
     churn=y_pred>=0.5
     result={
