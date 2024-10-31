@@ -174,6 +174,9 @@ if st.button("Predict"):
 
     # Feedback section
     st.write("### Feedback")
+    # Comment box, always visible after prediction
+    st.write('Any additional comments?')
+    comment = st.text_input("Any additional comments? (Optional)")
     col1, col2 = st.columns([1, 1])  # Create two equal columns for thumbs up and down
     with col1:
         thumbs_up = st.button("👍 Yes")
@@ -186,8 +189,7 @@ if st.button("Predict"):
     elif thumbs_down:
         st.session_state.feedback = False
 
-    # Comment box, always visible after prediction
-    comment = st.text_input("Any additional comments? (Optional)")
+    
 
     # Submit Feedback button
     if st.button("Submit Feedback"):
