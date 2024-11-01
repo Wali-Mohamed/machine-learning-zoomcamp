@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Bank Term Deposit Prediction</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Title and Introduction -->
+        <h1>Bank Term Deposit Prediction</h1>
+        <p>This app predicts whether a bank client will subscribe to a term deposit based on their profile and past
+            campaign outcomes.</p>
+        <p>The model considers three key features:</p>
+
+        <!-- Key Features with Brief Explanation -->
+        <ul class="feature-list">
+            <li><strong>Job</strong>: The type of job the client has, which may reflect income stability and financial
+                behavior.</li>
+            <li><strong>Duration</strong>: The duration of the last contact with the client in seconds, often indicating
+                client engagement.</li>
+            <li><strong>Poutcome</strong>: The outcome of any previous marketing campaign. This can be:
+                <ul class="nested-list">
+                    <li><strong>Success</strong>: The client subscribed in a previous campaign.</li>
+                    <li><strong>Failure</strong>: The client was contacted but did not subscribe.</li>
+                    <li><strong>Unknown</strong>: No prior campaign information is available.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <!-- Form Section Title -->
+        <h2 class="form-title">Enter Client Information to Predict Subscription Likelihood</h2>
+
+        <!-- Form for Inputting Client Information -->
+        <form id="prediction-form" class="form-section">
+            <label for="job">Job:</label>
+            <select name="job" id="job" class="input-field">
+                <option value="management">Management</option>
+                <option value="technician">Technician</option>
+                <option value="entrepreneur">Entrepreneur</option>
+                <option value="blue-collar">Blue-collar</option>
+                <option value="unknown">Unknown</option>
+            </select>
+
+            <label for="duration">Duration of Last Contact (seconds):</label>
+            <input type="range" name="duration" id="duration" min="0" max="1000" value="400" class="input-field"
+                oninput="updateDurationLabel(this.value)">
+            <span id="duration-value">400</span> seconds
+
+            <label for="poutcome">Outcome of Previous Campaign:</label>
+            <select name="poutcome" id="poutcome" class="input-field">
+                <option value="success">Success</option>
+                <option value="failure">Failure</option>
+                <option value="unknown">Unknown</option>
+            </select>
+
+            <button type="button" onclick="submitPrediction()" class="predict-button">Predict</button>
+        </form>
+
+        <!-- Prediction Result -->
+        <div id="result" class="result-section" style="display: none;">
+            <h2>Prediction Result</h2>
+            <p id="prediction-message"></p>
+        </div>
+
+        <!-- Feedback Section -->
+        <div id="feedback-section" class="feedback-section" style="display: none;">
+            <h2>Feedback</h2>
+            <label for="thumbs_up">Did you find this prediction helpful?</label><br>
+            <input type="radio" name="thumbs_up" value="true"> Yes
+            <input type="radio" name="thumbs_up" value="false"> No<br><br>
+
+            <label for="comment">Comments (Optional):</label>
+            <textarea name="comment" id="comment" class="input-field"></textarea><br><br>
+
+            <button type="button" onclick="submitFeedback()" class="feedback-button">Submit Feedback</button>
+        </div>
+    </div>
+
+    <!-- Include external JavaScript file -->
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+
+</html>

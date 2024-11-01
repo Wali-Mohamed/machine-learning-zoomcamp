@@ -1,0 +1,127 @@
+/* Light Theme Styles */
+:root {
+    --background-color: #f7f9fc;
+    --text-color: #333333;
+    --heading-color: #003366;
+    --border-color: #ccc;
+    --button-background: #0066cc;
+    --button-border: #004080;
+    --button-hover-background: #004080;
+    --section-background: #e6f2ff;
+    --section-border: #0066cc;
+}
+
+/* Container Styles */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--background-color);
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Title and Subheading Styles */
+h1 {
+    text-align: center;
+    color: var(--heading-color);
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+p {
+    color: var(--text-color);
+    text-align: center;
+    font-size: 1em;
+}
+
+.feature-list, .nested-list {
+    color: var(--heading-color);
+    margin: 10px 20px;
+}
+
+/* Form Section */
+.form-title {
+    text-align: center;
+    color: var(--heading-color);
+    font-size: 1.5em;
+    margin-top: 20px;
+}
+
+.form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 10px;
+    padding: 10px 20px;
+}
+
+.input-field {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+    font-size: 1em;
+    width: 100%;
+}
+
+#duration-value {
+    display: inline-block;
+    margin-top: 5px;
+    font-weight: bold;
+    color: var(--heading-color);
+}
+
+/* Button Styles */
+.predict-button, .feedback-button {
+    background-color: var(--button-background);
+    color: white;
+    border: 2px solid var(--button-border);
+    border-radius: 8px;
+    padding: 10px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.predict-button:hover, .feedback-button:hover {
+    background-color: var(--button-hover-background);
+}
+
+/* Result and Feedback Section */
+.result-section, .feedback-section {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: var(--section-background);
+    border: 1px solid var(--section-border);
+    border-radius: 8px;
+}
+
+.feedback-section h2 {
+    color: var(--heading-color);
+}
+
+.feedback-section label {
+    font-weight: bold;
+}
+
+/* Dark Theme Styles */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background-color: #1a1a1a;
+        --text-color: #e0e0e0;
+        --heading-color: #b3c7e6;
+        --border-color: #444444;
+        --button-background: #3399ff;
+        --button-border: #1a5fb4;
+        --button-hover-background: #1a5fb4;
+        --section-background: #333333;
+        --section-border: #3399ff;
+    }
+
+    /* Adjusting the container shadow for dark mode */
+    .container {
+        box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.1);
+    }
+}
