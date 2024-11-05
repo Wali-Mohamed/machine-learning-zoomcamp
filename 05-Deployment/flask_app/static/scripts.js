@@ -38,3 +38,7 @@ function submitFeedback() {
 
     .catch(error => console.error('Error:', error));
 }
+function updateDurationLabel(value) {
+    document.getElementById("duration-value").textContent = value;
+}
+
