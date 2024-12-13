@@ -8,9 +8,12 @@ from keras_image_helper import create_preprocessor
 preprocessor = create_preprocessor('xception', target_size=(299, 299))
 
 
-interpreter = tflite.Interpreter(model_path='clothing-model.tflite')
-interpreter.allocate_tensors()
 
+try:
+    interpreter = tflite.Interpreter(model_path='clothing-model.tflite')
+    interpreter.allocate_tensors()
+except Exception as e:
+    print(f"Error initializing the interpreter: {e}")
 input_index = interpreter.get_input_details()[0]['index']
 output_index = interpreter.get_output_details()[0]['index']
 
