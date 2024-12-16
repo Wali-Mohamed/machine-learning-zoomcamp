@@ -1,0 +1,7 @@
+# start agent
+eval "$(ssh-agent -s)"
+
+# add key
+
+ssh-add ~/secrets/id_ed25519_git
+
